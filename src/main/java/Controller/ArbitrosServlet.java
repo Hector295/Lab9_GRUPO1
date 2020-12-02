@@ -1,7 +1,9 @@
 package Controller;
 
 import Bean.Arbitros;
+import Bean.Jugadores;
 import Dao.DaoArbitros;
+import Dao.DaoBase;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -20,19 +22,59 @@ public class ArbitrosServlet extends HttpServlet {
         ArrayList<String> opciones = new ArrayList<>();
         opciones.add("nombre");
         opciones.add("pais");
+        DaoArbitros daoArbitros = new DaoArbitros();
+        ArrayList<String> paises = new ArrayList<>();
+        paises.add("Peru");
+        paises.add("Chile");
+        paises.add("Argentina");
+        paises.add("Paraguay");
+        paises.add("Uruguay");
+        paises.add("Colombia");
 
         switch (action) {
 
             case "buscar":
-                /*
-                Inserte su código aquí
-                 */
+                String opcion = request.getParameter("tipo");
+                String buscar = request.getParameter("buscar");
+                if (opcion.equalsIgnoreCase("pais")) {
+                    request.setAttribute("listaArbitros",daoArbitros.busquedaPais(buscar) );
+                    request.setAttribute("opciones",opciones);
+                }
+                if (opcion.equalsIgnoreCase("nombre")) {
+                    request.setAttribute("listaArbitros", daoArbitros.busquedaNombre(buscar));
+                    request.setAttribute("opciones",opciones);
+                }else{
+                    request.setAttribute("paises", paises);
+                    view = request.getRequestDispatcher("/Arbitros/form.jsp");
+                    view.forward(request, response);
+                }
+                view = request.getRequestDispatcher("Arbitros/list.jsp");
+                view.forward(request, response);
                 break;
 
             case "guardar":
-                /*
-                Inserte su código aquí
-                 */
+                Arbitros arbitro = new Arbitros();
+                arbitro.setNombre(request.getParameter("nombre"));
+                arbitro.setPais(request.getParameter("pais"));
+                ArrayList<Arbitros> listaArbitros= daoArbitros.listarArbitros();
+                boolean evaluar = false;
+                for(Arbitros i: listaArbitros){
+                    if(i.getNombre().equalsIgnoreCase(arbitro.getNombre())){
+                        evaluar = true;
+                        break;
+                    }
+                }
+                if(!arbitro.getNombre().equalsIgnoreCase("")
+                        && !request.getParameter("nombre").equalsIgnoreCase("")
+                        && !arbitro.getPais().equalsIgnoreCase("")
+                        && evaluar ==false){
+
+                    daoArbitros.crearArbitro(arbitro);
+                }else{
+
+                    view = request.getRequestDispatcher("/Jugadores/FormCreate.jsp");
+                    view.forward(request, response);
+                }
                 break;
 
         }
@@ -52,25 +94,26 @@ public class ArbitrosServlet extends HttpServlet {
         ArrayList<String> opciones = new ArrayList<>();
         opciones.add("nombre");
         opciones.add("pais");
-
+        DaoArbitros daoArbitros = new DaoArbitros();
         switch (action) {
             case "lista":
-                /*
-                Inserte su código aquí
-                 */
+                ArrayList<Arbitros> listaArbitros = daoArbitros.listarArbitros();
+                request.setAttribute("listaArbitros", listaArbitros);
+                request.setAttribute("opciones",opciones);
                 view = request.getRequestDispatcher("/Arbitros/list.jsp");
                 view.forward(request, response);
                 break;
             case "crear":
-                /*
-                Inserte su código aquí
-                 */
-
+                request.setAttribute("paises",paises);
+                view = request.getRequestDispatcher("/Arbitros/form.jsp");
+                view.forward(request, response);
                 break;
             case "borrar":
-                /*
-                Inserte su código aquí
-                 */
+                int id = Integer.parseInt(request.getParameter("id"));
+                if(daoArbitros.buscarArbitro(id) != null){
+                    daoArbitros.borrarArbitro(id);
+                }
+                response.sendRedirect(request.getContextPath() + "/ArbitrosServlet");
                 break;
         }
     }

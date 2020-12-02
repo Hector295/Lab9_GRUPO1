@@ -1,6 +1,8 @@
-
+<%@ page import="java.util.ArrayList" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-
+<%
+    ArrayList<String> paises = (ArrayList<String>) request.getAttribute("paises");
+%>
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -22,7 +24,9 @@
                 <div class="form-group">
                     <label>País</label>
                     <select name="pais" class="form-control">
-<%--                        COLOCAR LISTA DE PAÍSES BRINDADA EN EL SERVLET--%>
+                        <% for (String p: paises) {%>
+                        <option value="<%=p%>"><%=p%></option>
+                        <% }%>
                     </select>
                 </div>
                 <button type="submit" class="btn btn-primary">Guardar</button>
