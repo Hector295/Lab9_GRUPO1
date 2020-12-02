@@ -21,7 +21,7 @@ public class DaoPartidos {
             ResultSet rs = stmt.executeQuery(sql);
             while (rs.next()) {
                 Partidos partido = new Partidos();
-                partido.setIdSeleccionesNacionales(rs.getInt(1));
+                partido.setIdPartido(rs.getInt(1));
                 partido.setNombre(rs.getString(2));
                 partido.setTecnico(rs.getString(3));
                 partido.setEstadios_idEstadio(rs.getInt(4));
