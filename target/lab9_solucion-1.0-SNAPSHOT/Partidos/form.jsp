@@ -1,7 +1,14 @@
 <%@ page import="java.util.ArrayList" %>
+<%@ page import="Bean.SeleccionesNacionales" %>
+<%@ page import="Bean.Arbitros" %>
 
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
+<%
+    ArrayList<SeleccionesNacionales> lista = (ArrayList<SeleccionesNacionales>) request.getAttribute("lista");
+
+    ArrayList<Arbitros> listaA = (ArrayList<Arbitros>) request.getAttribute("listaA");
+%>
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -28,19 +35,25 @@
                 <div class="form-group">
                     <label>Selección local</label>
                     <select name="local" class="form-control">
-<%--                       COLOCAR LISTA DE SELECCIONES DE LA BASE DE DATOS--%>
+                        <% for (SeleccionesNacionales selec: lista) {%>
+                        <option value="<%=selec.getIdSeleccionesNacionales()%>"><%=selec.getNombre()%></option>
+                        <% }%>
                     </select>
                 </div>
                 <div class="form-group">
                     <label>Selección Visitante</label>
                     <select name="visitante" class="form-control">
-<%--                        COLOCAR LISTA DE SELECCIONES DE LA BASE DE DATOS--%>
+                        <% for (SeleccionesNacionales selec: lista) {%>
+                        <option value="<%=selec.getIdSeleccionesNacionales()%>"><%=selec.getNombre()%></option>
+                        <% }%>
                     </select>
                 </div>
                 <div class="form-group">
                     <label>Árbitro</label>
                     <select name="arbitro" class="form-control">
-<%--                        COLOCAR LISTA DE ÁRBITRO DE LA BASE DE DATOS--%>
+                        <% for (Arbitros arbitros: listaA) {%>
+                        <option value="<%=arbitros.getIdArbitros()%>"><%=arbitros.getNombre()%></option>
+                        <% }%>
                     </select>
                 </div>
                 <button type="submit" class="btn btn-primary">Guardar</button>

@@ -8,7 +8,11 @@ public class Partidos {
     private SeleccionesNacionales seleccionLocal;
     private SeleccionesNacionales seleccionVisitante;
     private Arbitros arbitro;
+    private Estadios estadio;
 
+    public Estadios getEstadio() { return estadio; }
+
+    public void setEstadio(Estadios estadio) { this.estadio = estadio; }
 
     public int getIdPartido() {
         return idPartido;
@@ -46,9 +50,7 @@ public class Partidos {
         return seleccionVisitante;
     }
 
-    public void setSeleccionVisitante(SeleccionesNacionales seleccionVisitante) {
-        this.seleccionVisitante = seleccionVisitante;
-    }
+    public void setSeleccionVisitante(SeleccionesNacionales seleccionVisitante) { this.seleccionVisitante = seleccionVisitante; }
 
     public Arbitros getArbitro() {
         return arbitro;

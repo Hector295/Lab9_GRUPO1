@@ -1,6 +1,7 @@
 package Controller;
 
 import Bean.Arbitros;
+import Bean.Estadios;
 import Bean.Partidos;
 import Bean.SeleccionesNacionales;
 import Dao.DaoArbitros;
@@ -35,19 +36,25 @@ public class PartidosServlet extends HttpServlet {
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
+        DaoPartidos daoPartido=new DaoPartidos();
+        DaoSelecciones daoSelecciones=new DaoSelecciones();
+        DaoArbitros daoArbitros = new DaoArbitros();
         String action = request.getParameter("action") == null ? "lista" : request.getParameter("action");
         RequestDispatcher view;
         switch (action) {
             case "lista":
-                ArrayList<SeleccionesNacionales> listaPartidos1 = daoSeleccionesNacionales.listarPartidos();
-                request.setAttribute("lista", listaselecciones1);
+                ArrayList<Partidos> listaPartidos1 = daoPartido.listaDePartidos();
+                request.setAttribute("lista", listaPartidos1);
                 view = request.getRequestDispatcher("index.jsp");
                 view.forward(request, response);
                 break;
             case "crear":
-                /*
-                Inserte su código aquí
-                 */
+                ArrayList<SeleccionesNacionales> selec = daoSelecciones.listarSelecciones();
+                ArrayList<Arbitros> arbitro = daoArbitros.listarArbitros();
+                request.setAttribute("lista", selec);
+                request.setAttribute("listaA", arbitro);
+                view = request.getRequestDispatcher("/Partidos/form.jsp");
+                view.forward(request, response);
                 break;
 
         }

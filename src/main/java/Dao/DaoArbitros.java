@@ -1,18 +1,33 @@
 package Dao;
 
 import Bean.Arbitros;
+import Bean.Estadios;
+import Bean.SeleccionesNacionales;
 
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 
-public class DaoArbitros  {
+public class DaoArbitros extends DaoBase {
     public ArrayList<Arbitros> listarArbitros() {
 
         ArrayList<Arbitros> arbitros = new ArrayList<>();
 
-        /*
-                Inserte su código aquí
-                 */
+        String sql = "Select nombre from arbitros;";
+        try (Connection conn = getConnection();
+             Statement stmt = conn.createStatement();
+             ResultSet rs = stmt.executeQuery(sql);){
+            while (rs.next()) {
+                Arbitros arbitro= new Arbitros();
+                arbitro.setNombre(rs.getString(1));
 
+                arbitros.add(arbitro);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
         return arbitros;
     }
 
