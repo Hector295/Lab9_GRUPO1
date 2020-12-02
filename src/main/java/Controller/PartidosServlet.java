@@ -26,9 +26,7 @@ public class PartidosServlet extends HttpServlet {
         switch (action) {
 
             case "guardar":
-                /*
-                Inserte su código aquí
-                 */
+
                 break;
 
         }

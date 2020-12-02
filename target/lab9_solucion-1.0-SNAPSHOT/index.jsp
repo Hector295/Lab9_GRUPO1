@@ -40,10 +40,10 @@
             <td><%=partido.getIdPartido()%></td>
             <td><%=partido.getNumeroJornada()%></td>
             <td><%=partido.getFecha()%></td>
-            <td><%=partido.getSeleccionLocal()%></td>
-            <td><%=partido.getSeleccionVisitante()%></td>
-            <td><%=partido.getEstadio()%></td>
-            <td><%=partido.getArbitro()%></td>
+            <td><%=partido.getSeleccionLocal().getIdSeleccionesNacionales()%></td>
+            <td><%=partido.getSeleccionVisitante().getIdSeleccionesNacionales()%></td>
+            <td><%=partido.getEstadio().getNombre()%></td>
+            <td><%=partido.getArbitro().getNombre()%></td>
         </tr>
 
         <%
