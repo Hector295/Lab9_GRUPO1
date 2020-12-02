@@ -1,5 +1,11 @@
+<%@ page import="Bean.Arbitros" %>
+<%@ page import="java.util.ArrayList" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
+<%
+    ArrayList<Arbitros> listaArbitros = (ArrayList<Arbitros>) request.getAttribute("listaArbitros");
+    ArrayList<String> opciones = (ArrayList<String>) request.getAttribute("opciones");
+%>
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -20,11 +26,13 @@
         <form method="post" action="<%= request.getContextPath()%>/ArbitrosServlet?action=buscar" class="row">
             <div class="col-lg-3">
                 <select name="tipo" class="form-control">
-<%--                    ACA DEBE COLOCAR LA LISTA DE OPCIONES MOSTRADAS EN EL SERVLET--%>
+                    <% for (String op: opciones) {%>
+                    <option value="<%=op%>"><%=op%></option>
+                    <% }%>
                 </select>
             </div>
             <div class="col-lg-5">
-                <input type="text" class="form-control" name="buscar">
+                <input type="text" class="form-control" name="buscar" placeholder="Buscar Arbitro">
             </div>
             <div class="col-lg-2">
                 <button type="submit" class="btn btn-primary">Buscar</button>
@@ -41,16 +49,20 @@
             <th>Pais</th>
             <th></th>
         </tr>
+        <%
+            for (Arbitros arbitros : listaArbitros) {
+        %>
         <tr>
-            <td></td>
-            <td></td>
-            <td></td>
+            <td><%=arbitros.getIdArbitros()%> </td>
+            <td><%=arbitros.getNombre()%></td>
+            <td><%=arbitros.getPais()%></td>
             <td>
-                <a href="<%=request.getContextPath()%>/ArbitrosServlet?action=borrar&id=">
+                <a href="<%=request.getContextPath()%>/ArbitrosServlet?action=borrar&id="<%=arbitros.getIdArbitros()%>>
                     Borrar
                 </a>
             </td>
         </tr>
+        <%}%>
     </table>
 </div>
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
