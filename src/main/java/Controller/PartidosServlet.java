@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.ArrayList;
 
 @WebServlet(name = "PartidosServlet", urlPatterns = {"/PartidosServlet", ""})
 public class PartidosServlet extends HttpServlet {
@@ -38,9 +39,8 @@ public class PartidosServlet extends HttpServlet {
         RequestDispatcher view;
         switch (action) {
             case "lista":
-                /*
-                Inserte su código aquí
-                 */
+                ArrayList<SeleccionesNacionales> listaPartidos1 = daoSeleccionesNacionales.listarPartidos();
+                request.setAttribute("lista", listaselecciones1);
                 view = request.getRequestDispatcher("index.jsp");
                 view.forward(request, response);
                 break;
